@@ -3,19 +3,30 @@ package com.pptb.eirene.mapit;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class About extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private TextView githubLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+        githubLink = (TextView)findViewById(R.id.mitGithub);
+
+        githubLink.setText(
+                Html.fromHtml(
+                        "<a href=\"https://github.com/gloredto/MapIT\">github.com/gloredto/MapIT</a> "));
+        githubLink.setMovementMethod(LinkMovementMethod.getInstance());
 
         firebaseAuth = FirebaseAuth.getInstance();
     }
