@@ -1,6 +1,7 @@
 package com.pptb.eirene.mapit;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,16 +10,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Profile extends AppCompatActivity {
 
-    private EditText userName, userPassword, userEmail, userAge;
-    private Button regButton;
-    private TextView userLogin;
-    private ImageView userProfilePicture;
+    private TextView profileName, profileBornWhere, profileBornWhen, profileAge;
+    private Button profileUpdate;
+    private ImageView profilePicture;
     private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,21 @@ public class Profile extends AppCompatActivity {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase =FirebaseDatabase.getInstance();
+
+        DatabaseReference databaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Profile.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void Logout(){
@@ -51,13 +73,12 @@ public class Profile extends AppCompatActivity {
     }
 
     private void setupUIViews(){
-        userName = findViewById(R.id.mitUsername);
-        userPassword = findViewById(R.id.mitLoginPassword);
-        userEmail = findViewById(R.id.mitEmail);
-        regButton = findViewById(R.id.btnUpdateProfile);
-        userLogin = findViewById(R.id.mitLogin);
-        userAge = findViewById(R.id.mitAge);
-        userProfilePicture = findViewById(R.id.mitProfilePicture);
+        profileName = findViewById(R.id.mitUsernameProfile);
+        profileBornWhen = findViewById(R.id.mitBornWhenProfile);
+        profileBornWhere = findViewById(R.id.mitBornWhereProfile);
+        profileUpdate = findViewById(R.id.btnProfile);
+        profileAge = findViewById(R.id.mitAgeProfile);
+        profilePicture = findViewById(R.id.mitPictureProfile);
 
 
     }

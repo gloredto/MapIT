@@ -8,4 +8,6 @@ public class UserProfile {
         this.userEmail = userEmail;
         this.userName = userName;
     }
+
+
 }

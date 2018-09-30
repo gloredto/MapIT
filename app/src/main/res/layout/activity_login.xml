@@ -8,7 +8,7 @@
     tools:context=".Login">
 
     <EditText
-        android:id="@+id/mitUsername"
+        android:id="@+id/mitUsernameProfile"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mitUsername"
+        app:layout_constraintTop_toBottomOf="@+id/mitUsernameProfile"
         app:layout_constraintVertical_bias="0.032" />
 
     <Button
