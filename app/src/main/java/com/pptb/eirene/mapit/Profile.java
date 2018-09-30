@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Profile extends AppCompatActivity {
 
     private TextView profileName, profileBornWhere, profileBornWhen, profileAge;
-    private Button profileUpdate;
+    private Button profileUpdate, changePassword;
     private ImageView profilePicture;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -43,6 +43,10 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                profileName.setText("Name : " + userProfile.getUserName());
+                profileBornWhere.setText("Place of Birth  : " +userProfile.getUserBornWhere());
+                profileBornWhen.setText("Date of Birth : " +userProfile.getUserBornWhen());
+                profileAge.setText("Age : " +userProfile.getUserAge());
             }
 
             @Override
@@ -50,6 +54,14 @@ public class Profile extends AppCompatActivity {
                 Toast.makeText(Profile.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        profileUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, UpdateProfile.class));
+            }
+        });
+
     }
 
     private void Logout(){
@@ -73,12 +85,13 @@ public class Profile extends AppCompatActivity {
     }
 
     private void setupUIViews(){
-        profileName = findViewById(R.id.mitUsernameProfile);
-        profileBornWhen = findViewById(R.id.mitBornWhenProfile);
-        profileBornWhere = findViewById(R.id.mitBornWhereProfile);
-        profileUpdate = findViewById(R.id.btnProfile);
-        profileAge = findViewById(R.id.mitAgeProfile);
+        profileName = findViewById(R.id.mitUsernameUpdate);
+        profileBornWhen = findViewById(R.id.mitBornWhenUpdate);
+        profileBornWhere = findViewById(R.id.mitBornWhereUpdate);
+        profileUpdate = findViewById(R.id.btnProfileUpdate);
+        profileAge = findViewById(R.id.mitAgeUpdate);
         profilePicture = findViewById(R.id.mitPictureProfile);
+        changePassword = findViewById(R.id.btnChangePassword);
 
 
     }

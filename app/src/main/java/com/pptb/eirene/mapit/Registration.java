@@ -24,7 +24,7 @@ public class Registration extends AppCompatActivity {
     private Button regButton;
     private TextView userLogin;
     private FirebaseAuth firebaseAuth;
-    String email, name, password;
+    String email, name, bornwhere, bornwhen, age, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +71,10 @@ public class Registration extends AppCompatActivity {
     }
 
     private void setupUIViews(){
-        userName = findViewById(R.id.mitUsernameProfile);
-        userPassword = findViewById(R.id.mitBornWhenProfile);
-        userEmail = findViewById(R.id.mitBornWhereProfile);
-        regButton = findViewById(R.id.btnProfile);
+        userName = findViewById(R.id.mitUsernameUpdate);
+        userPassword = findViewById(R.id.mitBornWhenUpdate);
+        userEmail = findViewById(R.id.mitBornWhereUpdate);
+        regButton = findViewById(R.id.btnProfileUpdate);
         userLogin = findViewById(R.id.mitLogin);
 
     }
@@ -85,6 +85,9 @@ public class Registration extends AppCompatActivity {
         name = userName.getText().toString();
         password = userPassword.getText().toString();
         email = userEmail.getText().toString();
+        bornwhere = "bornWhere";
+        bornwhen = "bornWhen";
+        age = "age";
 
         if(name.isEmpty() || password.isEmpty() || email.isEmpty()){
             Toast.makeText(this, "Please enter all the detail", Toast.LENGTH_SHORT).show();
@@ -119,7 +122,7 @@ public class Registration extends AppCompatActivity {
     private void sendUserData(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(firebaseAuth.getUid());
-        UserProfile userProfile = new UserProfile(email, name);
+        UserProfile userProfile = new UserProfile(email, name, bornwhere, bornwhen, age);
         myRef.setValue(userProfile);
     }
 

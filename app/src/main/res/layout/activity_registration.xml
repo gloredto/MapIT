@@ -7,7 +7,7 @@
     tools:context=".Registration">
 
     <EditText
-        android:id="@+id/mitUsernameProfile"
+        android:id="@+id/mitUsernameUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.465" />
 
     <EditText
-        android:id="@+id/mitBornWhereProfile"
+        android:id="@+id/mitBornWhereUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -39,11 +39,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mitUsernameProfile"
+        app:layout_constraintTop_toBottomOf="@+id/mitUsernameUpdate"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/mitBornWhenProfile"
+        android:id="@+id/mitBornWhenUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -57,11 +57,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mitBornWhereProfile"
+        app:layout_constraintTop_toBottomOf="@+id/mitBornWhereUpdate"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnProfile"
+        android:id="@+id/btnProfileUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -72,7 +72,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mitBornWhenProfile"
+        app:layout_constraintTop_toBottomOf="@+id/mitBornWhenUpdate"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -88,6 +88,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnProfile"
+        app:layout_constraintTop_toBottomOf="@+id/btnProfileUpdate"
         app:layout_constraintVertical_bias="0.84" />
 </android.support.constraint.ConstraintLayout>
