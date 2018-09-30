@@ -26,4 +26,12 @@
         android:title="About">
     </item>
 
+    <item
+        android:id="@+id/mapsMenu"
+        android:icon="@drawable/abouticon"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Maps">
+    </item>
+
 </menu>
