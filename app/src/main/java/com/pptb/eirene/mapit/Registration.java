@@ -71,10 +71,10 @@ public class Registration extends AppCompatActivity {
     }
 
     private void setupUIViews(){
-        userName = findViewById(R.id.mitUsername);
-        userPassword = findViewById(R.id.mitLoginPassword);
-        userEmail = findViewById(R.id.mitEmail);
-        regButton = findViewById(R.id.btnUpdateProfile);
+        userName = findViewById(R.id.mitUsernameProfile);
+        userPassword = findViewById(R.id.mitBornWhenProfile);
+        userEmail = findViewById(R.id.mitBornWhereProfile);
+        regButton = findViewById(R.id.btnProfile);
         userLogin = findViewById(R.id.mitLogin);
 
     }
