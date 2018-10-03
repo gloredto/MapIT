@@ -13,4 +13,7 @@
     <string name="edit">edit</string>
     <string name="save">save</string>
     <string name="title_activity_maps">Map</string>
+    <string name="changepassword">ChangePassword</string>
+    <string name="quote">quote</string>
+    <string name="new_password">new password</string>
 </resources>

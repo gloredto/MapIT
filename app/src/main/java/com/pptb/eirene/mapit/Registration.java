@@ -1,30 +1,63 @@
 package com.pptb.eirene.mapit;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.IOException;
 
 public class Registration extends AppCompatActivity {
 
     private EditText userName, userPassword, userEmail;
     private Button regButton;
     private TextView userLogin;
+    private ImageView userProfilePic;
+    private static int PICK_IMAGE = 123;
+    Uri imagePath;
+
     private FirebaseAuth firebaseAuth;
+    private FirebaseStorage firebaseStorage;
+
+    private StorageReference storageReference;
+
     String email, name, bornwhere, bornwhen, age, password;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
+            imagePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
+                userProfilePic.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +66,21 @@ public class Registration extends AppCompatActivity {
         setupUIViews();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+
+        storageReference = firebaseStorage.getReference();
+
+        userProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*"); //aplication/* audio/*
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select image"), PICK_IMAGE);
+            }
+        });
+
+
 
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +124,7 @@ public class Registration extends AppCompatActivity {
         userEmail = findViewById(R.id.mitBornWhereUpdate);
         regButton = findViewById(R.id.btnProfileUpdate);
         userLogin = findViewById(R.id.mitLogin);
+        userProfilePic = findViewById(R.id.mitPictureProfile);
 
     }
 
@@ -89,7 +138,7 @@ public class Registration extends AppCompatActivity {
         bornwhen = "bornWhen";
         age = "age";
 
-        if(name.isEmpty() || password.isEmpty() || email.isEmpty()){
+        if(name.isEmpty() || password.isEmpty() || email.isEmpty() || imagePath == null){
             Toast.makeText(this, "Please enter all the detail", Toast.LENGTH_SHORT).show();
         }else{
             result = true;
@@ -122,6 +171,19 @@ public class Registration extends AppCompatActivity {
     private void sendUserData(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(firebaseAuth.getUid());
+        StorageReference imageReference = storageReference.child(firebaseAuth.getUid()).child("Images").child("Profile_Pic"); //User Id/Images/profile_pic
+        UploadTask uploadTask = imageReference.putFile(imagePath);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Registration.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(Registration.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
+            }
+        });
         UserProfile userProfile = new UserProfile(email, name, bornwhere, bornwhen, age);
         myRef.setValue(userProfile);
     }

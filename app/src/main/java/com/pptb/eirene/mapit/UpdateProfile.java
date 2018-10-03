@@ -1,8 +1,10 @@
 package com.pptb.eirene.mapit;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,14 +26,15 @@ public class UpdateProfile extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
 
-
         setupUIViews();
 
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase =FirebaseDatabase.getInstance();
@@ -84,5 +87,13 @@ public class UpdateProfile extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
 
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onContextItemSelected(item);
+    }
 }
