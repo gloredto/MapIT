@@ -21,7 +21,7 @@ public class Login extends AppCompatActivity {
 
     private EditText userName;
     private EditText userPassword;
-    private Button userLogin;
+    private Button buttonLogin;
     private TextView userRegistration;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
 
         userName = (EditText)findViewById(R.id.mitUsernameUpdate);
         userPassword = (EditText)findViewById(R.id.mitPassword);
-        userLogin = (Button)findViewById(R.id.btnLogin);
+        buttonLogin = (Button)findViewById(R.id.btnLogin);
         userRegistration = (TextView)findViewById(R.id.mitSignUp);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(Login.this, MainActivity.class));
         }
 
-        userLogin.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 validate(userName.getText().toString(), userPassword.getText().toString());

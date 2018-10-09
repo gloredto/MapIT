@@ -122,7 +122,7 @@ public class Registration extends AppCompatActivity {
         userName = findViewById(R.id.mitUsernameUpdate);
         userPassword = findViewById(R.id.mitBornWhenUpdate);
         userEmail = findViewById(R.id.mitBornWhereUpdate);
-        regButton = findViewById(R.id.btnProfileUpdate);
+        regButton = findViewById(R.id.btnRegistration);
         userLogin = findViewById(R.id.mitLogin);
         userProfilePic = findViewById(R.id.mitPictureProfile);
 

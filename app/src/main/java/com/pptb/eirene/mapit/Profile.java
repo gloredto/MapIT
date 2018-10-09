@@ -119,7 +119,7 @@ public class Profile extends AppCompatActivity {
         profileName = findViewById(R.id.mitUsernameUpdate);
         profileBornWhen = findViewById(R.id.mitBornWhenUpdate);
         profileBornWhere = findViewById(R.id.mitBornWhereUpdate);
-        profileUpdate = findViewById(R.id.btnProfileUpdate);
+        profileUpdate = findViewById(R.id.btnRegistration);
         profileAge = findViewById(R.id.mitAgeUpdate);
         profileQuote = findViewById(R.id.mitQuoteUpdate);
         profilePicture = findViewById(R.id.mitProfilePicProfile);

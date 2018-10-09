@@ -96,8 +96,8 @@
 
     <EditText
         android:id="@+id/mitQuoteUpdate"
-        android:layout_width="215dp"
-        android:layout_height="43dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
