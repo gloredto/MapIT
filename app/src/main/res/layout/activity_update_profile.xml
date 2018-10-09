@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mitProfilePicProfile"
+        app:layout_constraintTop_toBottomOf="@+id/mitUpdateProfilePicture"
         app:layout_constraintVertical_bias="0.008"
         android:inputType="" />
 
@@ -61,7 +61,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/mitProfilePicProfile"
+        android:id="@+id/mitUpdateProfilePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

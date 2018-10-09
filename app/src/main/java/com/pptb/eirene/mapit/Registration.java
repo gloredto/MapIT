@@ -35,12 +35,13 @@ public class Registration extends AppCompatActivity {
     private Button regButton;
     private TextView userLogin;
     private ImageView userProfilePic;
-    private static int PICK_IMAGE = 123;
-    Uri imagePath;
+
 
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
 
+    private static int PICK_IMAGE = 123;
+    Uri imagePath;
     private StorageReference storageReference;
 
     String email, name, bornwhere, bornwhen, age, password;

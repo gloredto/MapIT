@@ -1,6 +1,10 @@
 package com.pptb.eirene.mapit;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,20 +15,49 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 public class UpdateProfile extends AppCompatActivity {
 
     private EditText updateName, updateBornWhere, updateBornWhen, updateAge;
     private Button saveUpdate;
-    private ImageView profilePicture;
+    private ImageView updateProfilePicture;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
+    private FirebaseStorage firebaseStorage;
+
+    private static int PICK_IMAGE = 123;
+    Uri imagePath;
+    private StorageReference storageReference;
+
+    String email, name, bornwhere, bornwhen, age, password;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
+            imagePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
+                updateProfilePicture.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -38,6 +71,7 @@ public class UpdateProfile extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase =FirebaseDatabase.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
 
         final DatabaseReference databaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());
 
@@ -57,6 +91,14 @@ public class UpdateProfile extends AppCompatActivity {
             }
         });
 
+        final StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child(firebaseAuth.getUid()).child("Images/Profile_Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).fit().centerCrop().into(updateProfilePicture);
+            }
+        });
+
         saveUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +111,31 @@ public class UpdateProfile extends AppCompatActivity {
 
                 databaseReference.setValue(userProfile);
 
+                StorageReference imageReference = storageReference.child(firebaseAuth.getUid()).child("Images").child("Profile_Pic"); //User Id/Images/profile_pic
+                UploadTask uploadTask = imageReference.putFile(imagePath);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UpdateProfile.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(UpdateProfile.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 finish();
+            }
+        });
+
+        updateProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*"); //aplication/* audio/*
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select image"), PICK_IMAGE);
             }
         });
 
@@ -82,7 +148,7 @@ public class UpdateProfile extends AppCompatActivity {
         updateBornWhere = findViewById(R.id.mitBornWhereUpdate);
         saveUpdate = findViewById(R.id.btnSaveUpdate);
         updateAge = findViewById(R.id.mitAgeUpdate);
-        profilePicture = findViewById(R.id.mitPictureProfile);
+        updateProfilePicture = findViewById(R.id.mitUpdateProfilePicture);
 
 
     }
