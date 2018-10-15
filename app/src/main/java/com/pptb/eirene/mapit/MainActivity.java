@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, Profile.class));
     }
 
+    private void Maps(){
+        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -54,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
             break;
             case R.id.profileMenu:{
                 Profile();
+            }
+            break;
+            case R.id.mapsMenu:{
+                Maps();
             }
         }
         return super.onOptionsItemSelected(item);

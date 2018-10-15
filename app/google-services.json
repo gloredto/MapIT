@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "131480029561-i71ri1jo9grimv9kbhaf9h8gmmvf9fpq.apps.googleusercontent.com",
+          "client_id": "131480029561-50lvuq5hmgehaccat054lavlmdq300tb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.pptb.eirene.mapit",
             "certificate_hash": "64657cfea99bea7440ef07410add528223575e94"
+          }
+        },
+        {
+          "client_id": "131480029561-p4h7elaraierus5so4a150v714vvd8q7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pptb.eirene.mapit",
+            "certificate_hash": "d3534623e4ac011932504ae5f9a4a2eb447f4ea0"
           }
         },
         {
